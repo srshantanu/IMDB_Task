@@ -2,7 +2,6 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import User
 
-
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -14,14 +13,14 @@ class BaseModel(models.Model):
 
 class Movies(BaseModel):
     movie_Id = models.UUIDField(default=uuid.uuid4, editable=False)
-    movie_name = models.CharField(max_length=200)
-    movie_director = models.CharField(max_length=50)
-    movie_imdb_score = models.FloatField(max_length=10, default=0.0)
-    movie_genre = models.TextField(null=True)
+    name = models.CharField(max_length=200)
+    director = models.CharField(max_length=50)
+    imdb_score = models.FloatField(max_length=10, default=0.0)
+    genre = models.TextField(null=True)
     movie_99popularity = models.FloatField(max_length=100, default=0.0)
 
     def __str__(self):
-        return self.movie_name
+        return self.name
 
 
 class Review(BaseModel):
