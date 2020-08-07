@@ -172,7 +172,7 @@ def api_movie_create(request):
 def api_movie_create_bulk(request):
     bulk_data = request.data['data']
 
-    data = {}
+    data = {"error" : "Data List Empty"}
 
     response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 

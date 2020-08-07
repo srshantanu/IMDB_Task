@@ -198,7 +198,7 @@
       OR
       
       * **Code:** 500 INTERNAL SERVER ERROR <br />
-          **Content:** `{}`
+          **Content:** `{"error" : "Data List Empty"}`
       
     
     * **Sample Call:**
@@ -242,7 +242,8 @@
     * **URL**
     
       https://imdbfyndtask.herokuapp.com/api/movie/<movie_Id>/update
-      *e.g : `https://imdbfyndtask.herokuapp.com/api/movie/6dd3c9e5823841a18a81f2b5f5eacc26/update`
+      
+      * e.g : `https://imdbfyndtask.herokuapp.com/api/movie/6dd3c9e5823841a18a81f2b5f5eacc26/update`
     
     * **Method:**
       
@@ -288,17 +289,17 @@
     
         
       * **Code:** 401 UNAUTHORIZED <br />
-        **Content:** `{ error : "Un-authorized" }`
+        **Content:** `{ "error" : "Un-authorized" }`
       
       OR
       
       * **Code:** 400 BAD REQUEST <br />
-          **Content:** `{ error : "User DoesNot Exist" }`
+          **Content:** `{ "error" : "User DoesNot Exist" }`
       
       OR
       
       * **Code:** 404 NOT FOUND <br />
-          **Content:** `{ error : "Movie Does Not Exist" }`
+          **Content:** `{ "error" : "Movie Does Not Exist" }`
       
     
     * **Sample Call:**
@@ -340,19 +341,224 @@
     
         
       * **Code:** 401 UNAUTHORIZED <br />
-        **Content:** `{ error : "Un-authorized" }`
+        **Content:** `{ "error" : "Un-authorized" }`
       
       OR
       
       * **Code:** 404 NOT FOUND <br />
-          **Content:** `{ error : "Movie DoesNot Exist" }`
+          **Content:** `{ "error" : "Movie DoesNot Exist" }`
       
       OR
       
       * **Code:** 500 INTERNAL SERVER ERROR <br />
-                **Content:** `{error : "Delete Unsuccessful!"}`
+                **Content:** `{ "error" : "Delete Unsuccessful!"}`
       
     
+    * **Sample Call:**
+        
+        Add above URL in Postman
+----
+
+**ALL USER**
+
+1. **All Movie list** : This is used to get all movies in DB using Pagination.
+    
+    * **URL**
+    
+      https://imdbfyndtask.herokuapp.com/api/movie/all
+    
+    * **Method:**
+      
+      `GET`
+      
+    *  **URL Header**
+        
+        `None`
+      
+    *  **URL Params**
+    
+       `page`
+       
+       * note : Used If result is paginated
+    
+    * **Data Params**
+        
+      **Required:**
+        `None`
+           
+      **Optional:**
+            
+        `page`
+    
+    * **Success Response:**
+     
+      * **Code:** 200 <br />
+        **Content:**  `{
+                           "count": 248,
+                           "next": "http://127.0.0.1:8000/api/movie/all?page=2",
+                           "previous": null,
+                           "results": [
+                               {
+                                   "movie_Id": "6dd3c9e5-8238-41a1-8a81-f2b5f5eacc26",
+                                   "name": "The Wizard of Oz update",
+                                   "director": "Giovanni Pastrone update",
+                                   "genre": "Adventure Drama War",
+                                   "imdb_score": 6.6,
+                                   "_99popularity": 66.0
+                               },
+                               {
+                                   "movie_Id": "28c33c21-6f16-45f8-b6e7-04e351a08b49",
+                                   "name": "Star Wars",
+                                   "director": "George Lucas",
+                                   "genre": "Action Adventure Fantasy Sci-Fi",
+                                   "imdb_score": 8.8,
+                                   "_99popularity": 88.0
+                               }
+                           ]
+                       }`
+     
+    * **Error Response:**
+    
+      * **Code:** 404 NOT FOUND <br />
+        **Content:** `{ error : "Movie Not Found" }`
+      
+    * **Sample Call:**
+        
+        Add above URL in Postman
+
+3. **Search & Filter Movies** : This is used to search and filter movies according the text given,
+                                Paginated if result is large.
+    
+    * **URL**
+    
+      https://imdbfyndtask.herokuapp.com/api/movie/search?search=&ordering=
+      
+      * e.g: `https://imdbfyndtask.herokuapp.com/api/movie/search?search=Wizard&ordering=-imdb_score`
+    
+    * **Method:**
+      
+      `GET`
+      
+    *  **URL Header**
+        
+        `None`
+      
+    *  **URL Params**
+    
+       `search` 
+       `ordering`
+       `page`
+       
+       **Required:**
+       
+       `None`
+       
+       **Optional**
+       
+       `search`
+       `ordering`
+       `page`
+      
+    * **Data Params**
+        `None`
+    
+    * **Success Response:**
+     
+      * **Code:** 200 <br />
+        **Content:**  `{
+                           "count": 2,
+                           "next": null,
+                           "previous": null,
+                           "results": [
+                               {
+                                   "movie_Id": "c0f8bb65-acc9-4e74-bb05-a4258c6cc138",
+                                   "name": "The Wizard of Oz",
+                                   "director": "Victor Fleming",
+                                   "genre": "Adventure Family Fantasy Musical",
+                                   "imdb_score": 8.3,
+                                   "_99popularity": 83.0
+                               },
+                               {
+                                   "movie_Id": "c2a6a7a2-40b1-40b0-8913-52e0de8f25d4",
+                                   "name": "The Wizard of Oz",
+                                   "director": "Larry Semon",
+                                   "genre": "Comedy Family Fantasy Adventure",
+                                   "imdb_score": 5.3,
+                                   "_99popularity": 53.0
+                               }
+                           ]
+                       }`
+     
+    * **Error Response:**
+    
+      * **Code:** 404 NOT FOUND <br />
+        **Content:** `{ error : "Movie DoesNot Exist" }`
+      
+    * **Sample Call:**
+        
+        Add above URL in Postman
+
+1. **All Movie list** : This is used to get all movies in DB using Pagination.
+    
+    * **URL**
+    
+      https://imdbfyndtask.herokuapp.com/api/movie/all
+    
+    * **Method:**
+      
+      `GET`
+      
+    *  **URL Header**
+        
+        `None`
+      
+    *  **URL Params**
+    
+       `page`
+       
+       * note : Used If result is paginated
+    
+    * **Data Params**
+        
+      **Required:**
+        `None`
+           
+      **Optional:**
+            
+        `page`
+    
+    * **Success Response:**
+     
+      * **Code:** 200 <br />
+        **Content:**  `{
+                           "count": 248,
+                           "next": "http://127.0.0.1:8000/api/movie/all?page=2",
+                           "previous": null,
+                           "results": [
+                               {
+                                   "movie_Id": "6dd3c9e5-8238-41a1-8a81-f2b5f5eacc26",
+                                   "name": "The Wizard of Oz update",
+                                   "director": "Giovanni Pastrone update",
+                                   "genre": "Adventure Drama War",
+                                   "imdb_score": 6.6,
+                                   "_99popularity": 66.0
+                               },
+                               {
+                                   "movie_Id": "28c33c21-6f16-45f8-b6e7-04e351a08b49",
+                                   "name": "Star Wars",
+                                   "director": "George Lucas",
+                                   "genre": "Action Adventure Fantasy Sci-Fi",
+                                   "imdb_score": 8.8,
+                                   "_99popularity": 88.0
+                               }
+                           ]
+                       }`
+     
+    * **Error Response:**
+    
+      * **Code:** 500 INTERNAL SERVER ERROR <br />
+        **Content:** `{ "error" : "Error Message" }`
+      
     * **Sample Call:**
         
         Add above URL in Postman
