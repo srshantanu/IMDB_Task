@@ -20,16 +20,26 @@ class SearchMovieListView(ListAPIView):
     permission_classes = (AllowAny,)
     filter_backends = (SearchFilter,OrderingFilter)
     search_fields = ('name', 'director', 'genre','imdb_score','movie_99popularity')
-    # ordering_fields = ()
 
 @api_view(['GET',])
 @permission_classes((AllowAny,))
 def api_all_movies_list(request):
     paginator = PageNumberPagination()
-    movies = Movies.objects.all()
-    result_page = paginator.paginate_queryset(movies, request)
-    serializer = MoviesSerializer(result_page, many=True)
-    return paginator.get_paginated_response(serializer.data)
+    data = {}
+    try:
+
+        movies = Movies.objects.all()
+        result_page = paginator.paginate_queryset(movies, request)
+        serializer = MoviesSerializer(result_page, many=True)
+
+        return paginator.get_paginated_response(serializer.data)
+
+    except Movies.DoesNotExist:
+
+        data["error"] = "Movie DoesNot Exist"
+        response_status = status.HTTP_404_NOT_FOUND
+
+        return Response(data=data, status=response_status)
 
 
 
@@ -199,7 +209,7 @@ def api_movie_create_bulk(request):
 def get_admin_token(request):
     data = {}
 
-    print(request.content_type)
+    print(request.data)
 
     if request.content_type == "application/json":
         username = request.data["username"]
