@@ -195,6 +195,7 @@ def api_movie_create_bulk(request):
 
 
 @api_view(["POST"])
+@permission_classes((AllowAny,))
 def get_admin_token(request):
     data = {}
 
