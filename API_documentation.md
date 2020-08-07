@@ -11,66 +11,64 @@
 
 **ADMIN USER**
 
-1. **Name**
+1. **Generate Token** : Used to Create, Update, Delete Movie
     
-    Generate Token : Used to Create, Update, Delete Movie
-
-* **URL**
-
-  https://imdbfyndtask.herokuapp.com/api/movie/get_admin_token
-
-* **Method:**
-  
-  `POST`
-  
-*  **URL Params**
-
-   `None`
-
-   **Required:**
- 
-   `None`
-
-   **Optional:**
- 
-   `None`
-
-* **Data Params**
-
-  `username`
-  `password`
-
-  **Required:**
+    * **URL**
+    
+      https://imdbfyndtask.herokuapp.com/api/movie/get_admin_token
+    
+    * **Method:**
+      
+      `POST`
+      
+    *  **URL Params**
+    
+       `None`
+    
+       **Required:**
      
-   `username`
-   `password`
-   
-  **Optional:**
+       `None`
     
-  `None`
-
-* **Success Response:**
- 
-  * **Code:** 200 <br />
-    **Content:**  `{"token": "4eba26e991f07175405ce3fc857fdd07c81d2354"}`
- 
-* **Error Response:**
-
+       **Optional:**
+     
+       `None`
     
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Un-authorized" }`
-
-  OR
-
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "Token Not Generated, Please Login!" }`
-  
-  OR
-  
-  * **Code:** 400 BAD REQUEST <br />
-      **Content:** `{ error : "User DoesNot Exist" }`
-  
-
-* **Sample Call:**
+    * **Data Params**
     
-    Add above URL in Postman
+      `username`
+      `password`
+    
+      **Required:**
+         
+       `username`
+       `password`
+       
+      **Optional:**
+        
+      `None`
+    
+    * **Success Response:**
+     
+      * **Code:** 200 <br />
+        **Content:**  `{"token": "4eba26e991f07175405ce3fc857fdd07c81d2354"}`
+     
+    * **Error Response:**
+    
+        
+      * **Code:** 401 UNAUTHORIZED <br />
+        **Content:** `{ error : "Un-authorized" }`
+    
+      OR
+    
+      * **Code:** 404 NOT FOUND <br />
+        **Content:** `{ error : "Token Not Generated, Please Login!" }`
+      
+      OR
+      
+      * **Code:** 400 BAD REQUEST <br />
+          **Content:** `{ error : "User DoesNot Exist" }`
+      
+    
+    * **Sample Call:**
+        
+        Add above URL in Postman
