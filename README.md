@@ -35,6 +35,14 @@ Database for API :
     .MySQL   (Locally as it gives better read and write speed)
 
     Note : I have attached basic DB schema named :  imdb_db_schema.pdf
+    
+Project Link Of Heroku :
+
+https://imdbfyndtask.herokuapp.com/
+
+Admin Credentials:
+**username - admin**
+**password - admin123**
  
 ----
 * **Question:**
