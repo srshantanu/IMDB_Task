@@ -199,8 +199,14 @@ def api_movie_create_bulk(request):
 def get_admin_token(request):
     data = {}
 
-    username = request.POST.get('username')
-    password = request.POST.get('password')
+    print(request.content_type)
+
+    if request.content_type == "application/json":
+        username = request.data["username"]
+        password = request.data["password"]
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
     user = authenticate(username=username, password=password)
 
     if user:
