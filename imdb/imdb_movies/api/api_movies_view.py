@@ -195,7 +195,7 @@ def api_movie_create_bulk(request):
             else:
                 data[single_data["name"]] = "Create Unsuccessful!"
 
-            response_status = status.HTTP_200_OK
+            response_status = status.HTTP_201_CREATED
 
     else:
         data["Error"] = "Un-authorized"
