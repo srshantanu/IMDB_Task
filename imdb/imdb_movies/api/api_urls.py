@@ -12,5 +12,7 @@ urlpatterns = [
     path('bulk_create',api_movie_create_bulk,name='bulk_create_movie'),
     path('get_admin_token',get_admin_token,name='get_admin_token'),
     path('all',api_all_movies_list,name='all_movies'),
+
+    # Search of the movie is implemented using class based view
     path('search',SearchMovieListView.as_view(),name='search_movies'),
 ]

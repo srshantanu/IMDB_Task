@@ -1,6 +1,4 @@
-
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
@@ -13,16 +11,24 @@ from imdb_movies.models import Movies
 
 from .serializers import MoviesSerializer
 
+# This class is used for the search and filter on the movie this
+'''
+I have used class based view for search and filter, as it is easy to implement and ListAPIView handles the requests,
+in more efficient way
+'''
+
+
 class SearchMovieListView(ListAPIView):
     queryset = Movies.objects.all()
     serializer_class = MoviesSerializer
     pagination_class = PageNumberPagination
     permission_classes = (AllowAny,)
-    filter_backends = (SearchFilter,OrderingFilter)
-    search_fields = ('name', 'director', 'genre','imdb_score','movie_99popularity')
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('name', 'director', 'genre', 'imdb_score', 'movie_99popularity')
 
-@api_view(['GET',])
-@permission_classes((AllowAny,))
+
+@api_view(['GET', ])  # This function only allow GET method
+@permission_classes((AllowAny,))  # Any user can use it either authenticated or anonymous
 def api_all_movies_list(request):
     paginator = PageNumberPagination()
     data = {}
@@ -42,9 +48,8 @@ def api_all_movies_list(request):
         return Response(data=data, status=response_status)
 
 
-
-@api_view(['GET',])
-@permission_classes((AllowAny,))
+@api_view(['GET', ])    # This function only allow GET method
+@permission_classes((AllowAny,)) # Any user can use it either authenticated or anonymous
 def api_movies_detail_by_id(request, id):
     data = {}
     try:
@@ -59,12 +64,11 @@ def api_movies_detail_by_id(request, id):
         data["Error"] = "Movie DoesNot Exist"
         response_status = status.HTTP_404_NOT_FOUND
 
+    return Response(data=data, status=response_status)
 
-    return Response(data=data,status=response_status)
 
-
-@api_view(['PUT', ])
-@permission_classes((IsAuthenticated,))
+@api_view(['PUT', ])    # This function only allow PUT method
+@permission_classes((IsAuthenticated,)) # User  with token can only access this function
 def api_movie_update(request, id):
     data = {}
     request_data = {}
@@ -104,8 +108,8 @@ def api_movie_update(request, id):
     return Response(data=data, status=response_status)
 
 
-@api_view(['Delete',])
-@permission_classes((IsAuthenticated,))
+@api_view(['DELETE', ]) # This function only allow DELETE method
+@permission_classes((IsAuthenticated,)) # User  with token can only access this function
 def api_movie_delete(request, id):
     data = {}
 
@@ -133,9 +137,8 @@ def api_movie_delete(request, id):
     return Response(data=data, status=response_status)
 
 
-
-@api_view(['POST',])
-@permission_classes((IsAuthenticated,))
+@api_view(['POST', ])  # This function only allow POST method
+@permission_classes((IsAuthenticated,)) # User  with token can only access this function
 def api_movie_create(request):
     data = {}
     request_data = {}
@@ -144,7 +147,8 @@ def api_movie_create(request):
 
     if user.is_superuser:
 
-        # This is done because input json has 99popularity as key which cannot be a var in python,thus added _99popularity.
+        # This is done because input json has 99popularity as key which cannot be a var in python,thus added
+        # _99popularity.
         request_data["_99popularity"] = request.data["99popularity"]
         request_data.update(request.data)
 
@@ -164,15 +168,15 @@ def api_movie_create(request):
         data["Error"] = "Un-authorized"
         response_status = status.HTTP_401_UNAUTHORIZED
 
-    return Response(data=data,status= response_status)
+    return Response(data=data, status=response_status)
 
 
-@api_view(['POST',])
-@permission_classes((IsAuthenticated,))
+@api_view(['POST', ])   # This function only allow POST method
+@permission_classes((IsAuthenticated,))     # User  with token can only access this function
 def api_movie_create_bulk(request):
     bulk_data = request.data['data']
 
-    data = {"error" : "Data List Empty"}
+    data = {"error": "Data List Empty"}
 
     response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
 
@@ -182,7 +186,8 @@ def api_movie_create_bulk(request):
 
         for single_data in bulk_data:
 
-            # This is done because input json has 99popularity as key which cannot be a var in python,thus added _99popularity.
+            # This is done because input json has 99popularity as key which cannot be a var in python,thus added
+            # _99popularity.
             single_data["_99popularity"] = single_data["99popularity"]
 
             # Using Sqllite3 in which we can't store array so have convert list as string
@@ -201,11 +206,11 @@ def api_movie_create_bulk(request):
         data["Error"] = "Un-authorized"
         response_status = status.HTTP_401_UNAUTHORIZED
 
-    return Response(data=data,status=response_status)
+    return Response(data=data, status=response_status)
 
 
-@api_view(["POST"])
-@permission_classes((AllowAny,))
+@api_view(["POST"])     # This function only allow POST method
+@permission_classes((AllowAny,))    # User  with token can only access this function
 def get_admin_token(request):
     data = {}
 

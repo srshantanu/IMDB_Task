@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+
+    # all the urls of the app
     path('', include('imdb_movies.urls')),
+
+    # django default admin page url
     path('admin/', admin.site.urls),
 ]
